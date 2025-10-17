@@ -1,0 +1,141 @@
+/* Products List Styling */
+.products-list {
+    
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+    overflow-x: auto; /* Enables horizontal scrolling if needed */
+}
+
+button[data-close] svg,
+.context-menu__item svg {
+pointer-events: none;
+}
+
+.products-list__header,
+.products-list__item {
+    display: grid;
+    grid-template-columns: 100px minmax(200px, 1.5fr) 100px 100px 80px 120px 120px;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.products-list__header {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #15181C;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+/* Column specific styles */
+.col-image {
+    width: 100px;
+}
+
+.col-product {
+    min-width: 0; /* Allows content to wrap */
+}
+
+.col-price,
+.col-currency,
+.col-stock {
+    text-align: right;
+}
+
+.col-status {
+    text-align: center;
+}
+
+.col-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* Product item specific styles */
+.products-list__image {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.products-list__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.products-list__details {
+    min-width: 0;
+}
+
+.products-list__title {
+    font-weight: 500;
+    color: white;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.products-list__id {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+/* Status Pills */
+.status-pill {
+    display: inline-flex;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pill--processing {
+    background-color: #ecfdf5;
+    color: #059669;
+}
+
+.status-pill--pending {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.status-pill--cancelled {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .products-list__header,
+    .products-list__item {
+        grid-template-columns: 80px minmax(180px, 1fr) 90px 90px 70px 100px 100px;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .products-list__image {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 992px) {
+    .col-currency {
+        display: none;
+    }
+    
+    .products-list__header,
+    .products-list__item {
+        grid-template-columns: 80px minmax(160px, 1fr) 90px 70px 100px 100px;
+    }
+}
