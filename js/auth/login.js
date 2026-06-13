@@ -46,7 +46,7 @@
     window.onTurnstileError = function() {
         turnstileToken = null;
         elements.sendCodeBtn.disabled = true;
-        showError('phoneError', 'Verification failed. Please refresh the page.');
+        showError('phoneError', 'فرآیند تأیید امنیتی با خطا مواجه شد. لطفاً صفحه را رفرش کنید.');
     };
 
     window.onTurnstileExpired = function() {
@@ -64,14 +64,10 @@
         const phone = elements.phoneInput.value.trim();
         
         if (!validatePhone(phone)) {
-            showError('phoneError', 'Please enter a valid phone number starting with 09');
+            showError('phoneError', 'شماره تلفن وارد شده معتبر نیست. شماره باید با ۰۹ شروع شود.');
             return;
         }
-
-        if (!turnstileToken) {
-            showError('phoneError', 'Please complete the verification');
-            return;
-        }
+        
 
         setButtonLoading(elements.sendCodeBtn, true);
         hideError('phoneError');
@@ -94,12 +90,13 @@
                 switchToOTPForm();
             } else {
                 // Check for rate limit
-                const errorMessage = data.error || 'Failed to send code. Please try again.';
+                const errorMessage = data.error || 'ارسال کد انجام نشد. لطفاً دوباره امتحان کنید.';
                 const seconds = Timer.extractSeconds(errorMessage);
                 
                 if (seconds) {
                     // Show error with countdown
-                    showError('phoneError', `Too many requests. Try again in ${seconds}s`);
+                    showError('phoneError', `کد قبلاً ارسال شده. لطفاً ${seconds} ثانیه دیگر صبر کنید.`);
+
                     startRateLimitTimer(seconds, 'phoneError', 'phoneErrorText');
                 } else {
                     showError('phoneError', errorMessage);
@@ -172,7 +169,7 @@
     function switchToOTPForm() {
         elements.phoneForm.classList.add('form--hidden');
         elements.otpForm.classList.remove('form--hidden');
-        elements.headerSubtitle.textContent = `Code sent to ${elements.phoneInput.value}`;
+        elements.headerSubtitle.textContent = `کد ارسال شد به ${elements.phoneInput.value}`;
         
         // Initialize OTP inputs
         otpInputHandler.clear();
@@ -185,7 +182,7 @@
     function switchToPhoneForm() {
         elements.otpForm.classList.add('form--hidden');
         elements.phoneForm.classList.remove('form--hidden');
-        elements.headerSubtitle.textContent = 'Enter your phone number to continue';
+        // elements.headerSubtitle.textContent = 'Enter your phone number to continue';
         
         // Stop timer
         if (otpTimer) otpTimer.stop();
@@ -217,7 +214,7 @@
 
     function onResendError(message, seconds) {
         if (seconds) {
-            showError('otpError', `Too many requests. Try again in ${seconds}s`);
+           showError('phoneError', `کد قبلاً ارسال شده. لطفاً ${seconds} ثانیه دیگر صبر کنید.`);
             startRateLimitTimer(seconds, 'otpError', 'otpErrorText');
         } else {
             showError('otpError', message);
@@ -232,7 +229,7 @@
         const interval = setInterval(() => {
             timeLeft--;
             if (errorTextElement) {
-                errorTextElement.textContent = `Too many requests. Try again in ${timeLeft}s`;
+                errorTextElement.textContent = `کد قبلاً ارسال شده. لطفاً ${timeLeft} ثانیه دیگر صبر کنید.`;
             }
             
             if (timeLeft <= 0) {

@@ -33,12 +33,18 @@ class ResendHandler {
         this.hideError();
 
         try {
+            console.log(turnstileToken)
             const response = await fetch(this.apiEndpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ phone }),
+                body: JSON.stringify({
+                     phone: phone,
+                    'cf-turnstile-response': turnstileToken,
+
+
+                }),
             });
 
             const data = await response.json();
@@ -48,7 +54,7 @@ class ResendHandler {
                 if (this.onSuccess) this.onSuccess(data);
             } else {
                 // Check for rate limit error
-                const errorMessage = data.error || 'Failed to resend code';
+                const errorMessage = data.error || 'ارسال کد انجام نشد. لطفاً دوباره امتحان کنید.';
                 const seconds = window.Timer ? window.Timer.extractSeconds(errorMessage) : null;
                 
                 if (seconds) {

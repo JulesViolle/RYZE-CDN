@@ -1,6 +1,6 @@
 // loading.js
 
-function simulateAction(button, duration = 2000) {
+function simulateAction(button, duration = 10000) {
   if (!button.classList.contains("loading")) {
     // Save original text
     button.dataset.originalText = button.innerHTML;
