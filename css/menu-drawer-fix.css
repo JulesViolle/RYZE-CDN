@@ -1,0 +1,31 @@
+.menu-drawer {
+    position: fixed; /* Change from absolute to fixed */
+    transform: translateX(-100%);
+    visibility: hidden;
+    z-index: 3;
+    left: 0;
+    top: var(--header-bottom-position, 100px);
+    width: 100%;
+    height: calc(100vh - var(--header-bottom-position, 100px));
+    padding: 0;
+    background-color: rgb(var(--color-background));
+    overflow-x: hidden;
+    transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+@media screen and (min-width: 750px) {
+    .menu-drawer {
+        width: 40rem;
+    }
+}
+
+.js details[open]>.menu-drawer {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+/* Ensure menu closes fully */
+.js details:not([open])>.menu-drawer {
+    transform: translateX(-100%);
+    visibility: hidden;
+}
